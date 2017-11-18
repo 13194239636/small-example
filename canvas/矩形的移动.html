@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>鼠标移动画线</title>
+    <style>
+        body{
+            background-color: black;
+        }
+        #c1{
+            background-color:white;
+        }
+    </style>
+    <script>
+        window.onload = function(){
+            var oC = document.getElementById("c1");
+            var oGc = oC.getContext("2d");
+            var num=0;
+
+
+            oGc.fillRect(0,0,40,40);
+            setInterval(function(){
+                num++;
+                oGc.clearRect(0,0,400,400);
+                oGc.fillRect(num,num,40,40);
+            },30);
+
+        }
+    </script>
+</head>
+<body>
+<canvas id="c1" width="400px" height="400px"></canvas>
+
+</body>
+</html>

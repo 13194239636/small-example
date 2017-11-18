@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>加入购物车功能</title>
+    <style>
+        *{
+            margin:0px;
+            padding:0px;
+        }
+        li{
+            list-style: none;
+            width:200px;
+            border: 1px solid #000;
+            float: left;
+        }
+        img{
+            width:200px;
+        }
+        #div1{
+            width:400px;
+            height:200px;
+            border: 1px solid #000;
+            margin:10px;
+            float: left;
+            clear: both;
+        }
+        p{
+            width:100%;
+            border:1px dashed #000;
+            clear:both;
+        }
+        .box1{
+            float:left;
+            margin-right:20px ;
+        }
+        .box2{
+            float: left;
+            margin-right:20px ;
+        }
+        .box3{
+            float:left;
+            margin-right:20px ;
+        }
+        .allMoney{
+            float:right;
+            clear: both;
+        }
+        #input1{
+            width:80px;
+            margin-left:10px;
+            clear: both;
+            float: left;
+        }
+    </style>
+    <script>
+        window.onload = function (){
+            var aLi = document.getElementsByTagName("li");
+            var oDiv = document.getElementById("div1");
+            var oInput = document.getElementById("input1");
+            var json = {};
+            var allMoney = null;
+
+            for(var i=0;i<aLi.length;i++){
+
+                aLi[i].ondragstart = function (ev){
+                    var ev = ev||window.event;
+                    var aP = this.getElementsByTagName("p");
+
+                    ev.dataTransfer.setData("title",aP[0].innerHTML);
+                    ev.dataTransfer.setData("money",aP[1].innerHTML);
+
+                }
+                oDiv.ondragover = function(ev){
+                    var ev = ev||window.event;
+                    ev.preventDefault();
+
+                }
+
+            }
+
+
+            oDiv.ondrop = function (ev){
+                var ev = ev||window.event;
+                ev.preventDefault();
+                var sTitle = ev.dataTransfer.getData("title");
+                var sMoney = ev.dataTransfer.getData("money");
+                if(!json[sTitle]){
+                    var cP = document.createElement("p");
+                    this.appendChild(cP);
+                    var span1 = document.createElement("span");
+                    span1.className = "box1";
+                    span1.innerHTML = "1";
+                    cP.appendChild(span1);
+                    var span2 = document.createElement("span");
+                    span2.className = "box2";
+                    span2.innerHTML = sTitle;
+                    cP.appendChild(span2);
+                    var span3 = document.createElement("span");
+                    span3.className = "box3";
+                    span3.innerHTML = sMoney;
+                    cP.appendChild(span3);
+                    json[sTitle]=1;
+                }
+                else{
+                    var oBox1 = document.getElementsByClassName("box1");
+                    var oBox2 = document.getElementsByClassName("box2");
+                    var oBox3 = document.getElementsByClassName("box3");
+                    for (var i=0;i<oBox2.length;i++){
+                        if(oBox2[i].innerHTML == sTitle){
+                            oBox1[i].innerHTML = parseInt(oBox1[i].innerHTML)+1;
+                            oBox3[i].innerHTML = parseInt(oBox3[i].innerHTML)+parseInt(sMoney)+"元";
+                        }
+                    }
+                }
+                if(!allMoney){
+                    allMoney = document.createElement("div");
+                    allMoney.className = "allMoney";
+                }
+
+                var oBox3 = document.getElementsByClassName("box3");
+                var tempMoney = 0;
+                for(var i =1;i<oBox3.length;i++){
+                    tempMoney+=parseInt(oBox3[i].innerHTML);
+                }
+
+                allMoney.innerHTML = "总价："+tempMoney+"元";
+
+                oDiv.appendChild(allMoney);
+
+            }
+
+
+            oInput.onclick = function () {
+                alert("你需要购买商品的总价为"+allMoney.innerHTML);
+            }
+        }
+    </script>
+</head>
+<body>
+<ul>
+    <li draggable="true">
+        <img src="images/img1.jpg"/>
+        <p>JavaScript语言精粹</p>
+        <p>40元</p>
+    </li>
+    <li  draggable="true">
+        <img src="images/img2.jpg"/>
+        <p>JavaScript权威指南</p>
+        <p>80元</p>
+    </li>
+    <li draggable="true">
+        <img src="images/img3.jpg"/>
+        <p>精通JavaScript</p>
+        <p>50元</p>
+    </li>
+    <li draggable="true">
+        <img src="images/img4.jpg"/>
+        <p>JavaScript DoM 编程艺术</p>
+        <p>40元</p>
+    </li>
+</ul>
+<div id="div1">
+
+    <p>
+        <span class="box1">数量</span>
+        <span class="box2">书名</span>
+        <span class="box3">单价</span>
+    </p>
+<!--    <p>
+    <span class="box1">1</span>
+    <span class="box2">JavaScript DoM 编程艺术</span>
+    <span class="box3">40元</span>
+    </p>-->
+</div>
+<input id="input1" value="付款" type="submit"/>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>随机彩票</title>
+    <script>
+        window.onload=function(){
+            var oInput = document.getElementById("input1");
+            var oDiv = document.getElementById("div1");
+            var json={};
+
+
+           oInput.onclick=function() {
+               var arr = randomNum(40, 5);
+               var num=Math.random();
+
+               json[num] = arr;
+
+               oDiv.innerHTML = arr;
+
+               window.location.hash = num;
+
+           };
+            window.onhashchange = function () {
+                   oDiv.innerHTML = json[window.location.hash.substring(1)];
+
+            };
+
+           function randomNum(AllNum,nowNum){
+                var otherArr1=[];
+                var otherArr2=[];
+                for(var i=0;i<AllNum;i++){
+                    otherArr1[i]=i;
+                }
+                for(var j=0;j<nowNum;j++){
+                    var temp =Math.floor(Math.random()*AllNum);//随机取得的数向下取整
+                    otherArr2[j]=otherArr1[temp];
+                }
+                return otherArr2;
+            }
+        }
+    </script>
+</head>
+<body>
+<input type="button" value="随机选择" id="input1"/>
+<div id="div1"></div>
+</body>
+</html>

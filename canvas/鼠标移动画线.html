@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>鼠标移动画线</title>
+    <style>
+        body{
+            background-color: black;
+        }
+        #c1{
+            background-color:white;
+        }
+    </style>
+    <script>
+        window.onload = function(){
+            var oC = document.getElementById("c1");
+            var oGc = oC.getContext("2d");
+
+
+            oC.onmousedown = function(ev){
+                var ev = ev||window.event;
+                var x = ev.clientX;
+                var y = ev.clientY;
+                oGc.moveTo(x-oC.offsetLeft,y-oC.offsetTop);
+
+
+                oC.onmousemove = function(ev){
+                    var ev = ev||window.event;
+                    var newX =ev.clientX;
+                    var newY = ev.clientY;
+
+                    oGc.lineTo(newX-oC.offsetLeft,newY-oC.offsetTop);
+                    oGc.stroke();
+                }
+                oC.onmouseup = function(){
+                    oC.onmousemove = null;
+                    oC.onmousemove = null;
+                }
+            }
+
+
+        }
+    </script>
+</head>
+<body>
+<canvas id="c1" width="400px" height="400px"></canvas>
+
+</body>
+</html>

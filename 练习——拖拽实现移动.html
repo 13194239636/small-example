@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        #div1{
+            width:200px;
+            height:300px;
+            margin:0 auto;
+        }
+        li{
+           list-style:none;
+            width:100%;
+            height:59px;
+            border-bottom:1px solid blue;
+            background-color: #cecece;
+        }
+    </style>
+</head>
+<body>
+<div id="div1">
+    <ul>
+        <li draggable="true">a</li>
+        <li draggable="true">b</li>
+        <li draggable="true">c</li>
+        <li draggable="true">d</li>
+        <li draggable="true">e</li>
+    </ul>
+</div>
+<script>
+    window.onload = function(){
+        var oUl = document.getElementsByTagName('ul')[0];
+        var aLi = document.getElementsByTagName('li');
+
+        for(var i=0;i<aLi.length;i++){
+            aLi[i].index = i;
+
+
+            aLi[i].ondragstart = function(ev){
+                var ev = ev||window.event;
+                ev.dataTransfer.setData('name',this.index);//保存起来，为drop事件做准备
+                }
+
+
+            aLi[i].ondragover = function(ev){//leave与enter之间的事件连续触发，同时需要添加阻止事件才能使drop事件可用
+
+                ev.preventDefault();//阻止事件
+
+            }
+
+
+            aLi[i].ondrop = function(ev){
+                var ev = ev||window.event;
+                var temp;
+
+                temp = this.innerHTML;
+                this.innerHTML = aLi[ev.dataTransfer.getData('name')].innerHTML;
+                aLi[ev.dataTransfer.getData('name')].innerHTML = temp;
+
+
+            }
+        }
+    }
+</script>
+</body>
+</html>

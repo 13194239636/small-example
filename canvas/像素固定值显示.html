@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body{
+            background-color: black;
+        }
+        canvas{
+            background-color: white;
+        }
+    </style>
+    <title>Title</title>
+    <script>
+        window.onload = function(){
+            var oC = document.querySelector("#c");
+            var oGc = oC.getContext("2d");
+            oGc.fillRect(0,0,100,100);//画原矩形
+
+            var rectData = oGc.getImageData(0,0,100,100);//获取原矩形的像素点的值
+            var w = rectData.width;//原矩形的宽
+            var h = rectData.height;//原矩形的长
+
+            var dataC = randomData(w*h,w*h/10);//randomData方法实现随机从原矩形的像素点中抽取一部分出来
+            var newData = oGc.createImageData(w,h);//创造一个新的矩形
+
+
+            //dataC数组中存放的是第几个像素，*4是为了把图片的data数组定位到这个像素的数据的第一个值，然后加一是第二个，以此类推。
+            for(var j=0;j<dataC.length;j++){
+                newData.data[4*dataC[j]]=rectData.data[4*dataC[j]];
+                newData.data[4*dataC[j]+1]=rectData.data[4*dataC[j]+1];
+                newData.data[4*dataC[j]+2]=rectData.data[4*dataC[j]+2];
+                newData.data[4*dataC[j]+3]=rectData.data[4*dataC[j]+3];
+            }
+            oGc.putImageData(newData,w,h);
+
+            function randomData(allNum,nowNum) {
+                var dataA = [];
+                var dataB = [];
+                for(var i=0;i<allNum;i++){
+                    dataA.push(i);
+                }
+
+                for(var i=0;i<nowNum;i++){
+                    dataB.push(dataA.splice(Math.floor(Math.random()*dataA.length),1));
+
+                }
+                return dataB;
+
+            }
+
+        }
+    </script>
+</head>
+<body>
+<canvas id="c" width="400" height="400"></canvas>
+</body>
+</html>
