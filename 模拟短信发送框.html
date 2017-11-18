@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>模拟短信发送</title>
+</head>
+<style>
+   boby{
+	   font-family:Arial, Helvetica, sans-serif;
+	   font-size:12px;
+	   }
+   #screen{
+	   border:solid thin #00F;
+	   background-color:#CCC;
+	   width:225px;
+	   height:300px;
+	   overflow:scroll;
+	   }
+   #t{
+	   color:#CCC;
+	   }
+   img{
+	   width:20px;
+	   height:20px;
+	   }
+	   
+</style>
+
+<script>
+   var hp = ["聊天气泡.png","地球.png"];
+   var num = 0;
+   //var chance = true;
+   window.onload = function(){
+	   var oText = document.getElementById("t");
+	   var oScreen = document.getElementById("screen");
+	   var oBut = document.getElementById("but");
+	   var oSpan = document.getElementById("hPicture");
+	   var oImg = document.getElementById("img1");
+       oText.value = "";
+	   
+	     oText.onclick = function(){
+				oText.style.color = "#000";
+		   }
+	     oBut.onclick = function(){
+	           if(oText.value ==""){
+		            alert("未输入！");
+		   }else{
+				   tSend();
+		    }
+	   }
+	   oImg.onclick = function(){
+		   	if(num==0){   
+	           oImg.src = hp[num+1];
+			   num++;
+			}else{
+			   oImg.src = hp[num-1];
+			   num--;
+			}
+		}
+       function send(){
+		   
+		   oScreen.innerHTML = oSpan.innerHTML+" : "+oText.value+"<br/>"+oScreen.innerHTML;
+		   oText.value = "";
+				  }
+				  
+	   function firstSend(){
+		   
+		   oScreen.innerHTML = oSpan.innerHTML+" : "+oText.value;
+		   oText.value = "";
+				  }
+				  
+		function tSend(){
+			
+			 if(oScreen.innerHTML!=""){
+	              send();
+				   }else{
+					   firstSend();
+					   }
+			}
+	  }
+</script>
+<body>
+   <div id="screen"></div>
+   <span id = "hPicture" ><img id="img1" src="聊天气泡.png" alt = "头像加载失败"></span>
+   <input  id="t" type="text" placeholder = "输入你想说的话!" />
+   <input id="but"  type="button" value="发送"/>
+</body>
+</html>

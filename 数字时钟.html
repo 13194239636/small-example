@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>数字时钟</title>
+</head>
+<style>
+    #block{
+        position: relative;
+    }
+    #img{
+        position: absolute;
+        top:0px;
+        width:1012px ;
+        height:173px ;
+    }
+    #hidden{
+        position: absolute;
+        top:0px;
+        width:1012px ;
+        height:173px ;
+        background-color: white;
+        z-index:1;
+
+	}
+</style>
+<script>
+window.onload = function(){
+	setInterval(oTime,1000);
+	oTime();
+	function oTime(){
+	var myTime = new Date();
+	var iHours = myTime.getHours();
+	var iMin = myTime.getMinutes();
+	var iSec = myTime.getSeconds();
+	var str = toTime(iHours)+toTime(iMin)+toTime(iSec);
+	var oP = document.getElementById("time");
+	var oImg = [document.getElementById("img1"),
+	            document.getElementById("img2"),
+	            document.getElementById("img4"),
+	            document.getElementById("img5"),
+	            document.getElementById("img7"),
+	            document.getElementById("img8"),
+				document.getElementById("imgReady1"),
+				document.getElementById("imgReady2"),
+				document.getElementById("imgReady3"),
+				document.getElementById("imgReady4"),
+				document.getElementById("imgReady5"),
+				document.getElementById("imgReady6")];
+	oP.innerHTML = str;
+	
+	for(var i=0;i<=oImg.length;i++){
+		if(i<6){
+            oImg[i].src = "img/数字img/"+str.charAt(i)+".JPG";
+		}else{
+			parseInt(str.charAt(i-6))!=9? oImg[i].src = "img/数字img/"+(parseInt(str.charAt(i-6))+1)+".JPG": oImg[i].src = "img/数字img/"+0+".JPG";
+			}
+		}
+	}
+
+	function toTime(n){
+		return n<10? "0"+n: ""+n;
+		}
+	}
+</script>
+<body>
+<p id="time" style="font-size:24px"></p>
+<img id="img1" src="img/数字img/0.JPG"  alt=""/>
+<img id="img2" src="img/数字img/0.JPG"  alt=""/>
+<img id="img3" src="img/数字img/colon.JPG"  alt=""/>
+<img id="img4" src="img/数字img/0.JPG"  alt=""/>
+<img id="img5" src="img/数字img/0.JPG"  alt=""/>
+<img id="img6" src="img/数字img/colon.JPG"  alt=""/>
+<img id="img7" src="img/数字img/0.JPG"  alt=""/>
+<img id="img8" src="img/数字img/0.JPG"  alt=""/><br />
+<div id="block">
+<div id="hidden"></div>
+<div id="img">
+<img id="imgReady1"  src="img/数字img/0.JPG"  alt=""/>
+<img id="imgReady2"  src="img/数字img/0.JPG"  alt=""/>
+<img    src="img/数字img/colon.JPG"  alt=""/>
+<img id="imgReady3"  src="img/数字img/0.JPG"  alt=""/>
+<img id="imgReady4"  src="img/数字img/0.JPG"  alt=""/>
+<img    src="img/数字img/colon.JPG"  alt=""/>
+<img id="imgReady5"  src="img/数字img/0.JPG"  alt=""/>
+<img id="imgReady6"  src="img/数字img/0.JPG"  alt=""/>
+</div>
+</div>
+</body>
+</html>

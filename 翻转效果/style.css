@@ -1,0 +1,34 @@
+body{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+#container{
+	width:980px;
+	height:500px;
+	position:relative;
+}
+.preserve{
+	transform-style: preserve-3d;
+	backface-visibility: hidden;
+	transition:1s ease-in-out;
+}
+#container img:nth-child(1){
+	position:absolute;
+	top: 0px;
+	left:0px;
+	transform: rotateY(0deg);
+}
+#container img:nth-child(2){
+	position:absolute;
+	top: 0px;
+	left:0px;
+	transform: rotateY(180deg);
+}
+#container:hover img:nth-child(1){
+	transform: rotateY(180deg);
+}
+#container:hover img:nth-child(2){
+	transform: rotateY(0deg);
+}
+

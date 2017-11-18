@@ -1,0 +1,85 @@
+﻿<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>旋转相册</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="description" content="自己制作的3d旋转相册" />
+  <style>
+    .con{width: 200px;height:300px;position:absolute;left: 0;right: 0;top: 0;bottom: 0;margin: auto;}
+    .cen{width: 200px;height:300px;position: absolute;transform-style: preserve-3d;transform:rotateX(-20deg);/*border: 1px dashed red*/}
+    .con:hover .cen{animation: dd 5s linear 2s infinite alternate;}
+    .cen img{position: absolute;transition: all 2s .5s ease-in-out;-webkit-transition: all 2s .5s ease-in-out;-e-transition: all 2s .5s ease-in-out; }
+    @keyframes dd{
+        0%{transform: translateZ(0px);}
+        100%{transform: translateZ(350px);}
+    }
+  </style>
+</head>
+
+<body>
+  <h1>旋转相册</h1>
+  <div class='con'>
+    <div class='cen'>
+      <img src='img/1.jpg'>
+      <img src='img/2.jpg'>
+      <img src='img/3.jpg'>
+      <img src='img/4.jpg'>
+      <img src='img/5.jpg'>
+      <img src='img/6.jpg'>
+      <img src='img/7.jpg'>
+      <img src='img/8.jpg'>
+      <img src='img/9.jpg'>
+      <img src='img/10.jpg'>
+    </div>
+  </div>
+</body>
+<script>
+
+window.onload = function(){
+    var cen = document.getElementsByClassName('cen')[0];
+    var img = cen.children;
+    for (var i = 0; i < img.length; i++) {
+        img[i].style.transform = 'rotateY('+i*360/img.length+'deg)  translateZ(350px)';
+    }
+
+cen.sx = 0;
+    document.onmousedown = function(e){
+        e = e || window.event;
+        cen.x = e.clientX;
+        cen.y = e.clientY;
+           console.log(e);
+
+        if(e.buttons == 2){
+            for (var i = 0; i < img.length; i++) {
+                img[i].style.transform += 'translateZ(350px)';
+            }
+            return false;
+        }
+
+        this.onmousemove = function(e){
+           e = e || window.event; 
+           cen.lx = (e.clientX - cen.x)*0.5;
+           cen.ly = e.clientY - cen.y;
+           cen.cx = (cen.sx + cen.lx);
+           cen.style.transform = 'rotateX(-20deg) rotateY('+ cen.cx +'deg)';
+
+           if(document.selection){//IE ,Opera
+                if(document.selection.empty)
+                    document.selection.empty();//IE
+                else{//Opera
+                    document.selection = null;
+                }
+            }else if(window.getSelection){//FF,Safari
+                window.getSelection().removeAllRanges();
+            }
+        }
+        this.onmouseup = function(){
+             cen.sx = cen.cx;
+            this.onmousemove = null;
+            this.onmouseup = null;
+        }
+    }
+}
+</script>
+</html>

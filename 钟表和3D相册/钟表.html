@@ -1,0 +1,138 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='utf-8'/>
+<title>钟表</title>
+<style>
+*{margin: 0;padding: 0;}
+#click{
+	background: url('img/click2.png');
+	background-size: 250px 376px; 
+	width: 250px;
+	height: 376px;
+	margin:  50px auto;
+	position: relative;
+}
+#all{
+	width: 180px;
+	height: 180px;
+	position: relative;
+	top: 136px;
+	left: 32px;
+}
+.clicken{
+	width: 181px;
+	height: 181px;
+	position: absolute;
+	border-radius: 50%;
+}
+.clicken li{
+	list-style-type: none;
+	width: 4px;
+	height: 4px;
+	position: absolute;
+	left:90px;
+	background: #000;
+	border-radius: 50%;
+	transform-origin: 0 90px;
+}
+.clicken li:nth-of-type(5n+1){
+	width: 4px;
+	height: 4px;
+	margin-left: : -3px;
+	background: green;
+    border:1px solid #000;
+}
+.clicknum{
+	position: absolute;
+	width: 160px;
+	height: 160px;
+	top: 10px;
+	left: 15px;
+}
+.clicknum li{
+    width:10px;
+    height:10px;
+	list-style-type: none;
+	position: absolute;
+	left:80px;
+	transform-origin:0 80px;
+    margin-left:-1px;
+}
+.clicknum span{
+    margin-left:-8px;
+	display: block;
+}
+#h,#m,#s{
+    position:absolute;
+    height:180px;
+    width:180px;
+    background-size:20px 90px;
+}
+#h{
+    background:url('img/hours.png') no-repeat;
+    background-size:22%;
+    background-position:top center;}
+#m{
+    background:url('img/minutes.png') no-repeat;
+    background-size:7%;
+    background-position:top center;}
+#s{
+    background:url('img/seconds.png') no-repeat;
+    background-size:3.3%;
+    background-position:top center;}
+</style>
+</head>
+<body>
+<div id='click'>
+	<div id='all'>
+		<ul class='clicken'></ul>
+		<ul class='clicknum'></ul>
+        <div id='h'></div>
+        <div id='m'></div>
+        <div id='s'></div>
+	</div>
+</div>
+<script>
+var clicken = document.getElementsByTagName('ul'),css=document.getElementsByTagName('style')[0];
+console.time('dd')
+var htm='',s='',h='';
+for (var i = 0; i < 60; i++) {
+	/*var li=document.createElement('li');
+	li.style.background='#000';
+	clicken.appendChild(li);*/
+	htm+='<li></li>';
+	s+='.clicken li:nth-of-type('+(i+1)+'){transform:rotate('+i*6+'deg)}';
+}
+for (var i = 12; i > 0; i--) {
+	h+='<li><span>'+i+'</span></li>';
+	s+='.clicknum li:nth-of-type('+(i+1)+'){transform:rotate('+(12-i)*30+'deg);} \n .clicknum li:nth-of-type('+(i+1)+') span{transform:rotate('+(i-12)*30+'deg);}';
+}
+clicken[0].innerHTML = htm;
+clicken[1].innerHTML = h;
+css.innerHTML += s;
+console.timeEnd('dd')
+
+var H = document.getElementById('h');
+var M = document.getElementById('m');
+var S = document.getElementById('s');
+
+    function time(){
+        var date = new Date;
+        var s = date.getSeconds();
+        var m = date.getMinutes() + s/60;
+        var h = date.getHours()+ m/60;
+        console.log(h,m,s);
+        H.style.transform = 'rotate('+ h*30 +'deg)';
+        M.style.transform = 'rotate('+ m*6 +'deg)';
+        S.style.transform = 'rotate('+ s*6 +'deg)';
+        if(s*6 != 0){
+            S.style.transition = 'all .5s cubic-bezier(0.4, 0, 1, 1)';
+        }else{
+            S.style.transition = '';
+        }
+    }
+    setInterval("time()",1000);
+</script>
+</body>
+</html>

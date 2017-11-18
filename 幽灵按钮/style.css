@@ -1,0 +1,150 @@
+*{
+	margin:0px;
+	padding:0px;
+}
+body{
+	background: linear-gradient(to bottom,#4A7F68,#02020c);
+
+}
+@media screen and (min-width:1000px){
+	#container{
+	width:1000px;
+	height:400px;
+	margin:60px auto;
+
+	}
+}
+@media screen and (min-width:768px) and (max-width:1000px){
+	#container{
+	width:768px;
+	height:400px;
+	margin:60px auto;
+
+	}
+}
+@media screen and (max-width:768px){
+	#container{
+	width:300px;
+	height:400px;
+	margin:60px auto;
+
+	}
+}
+#container .box{
+	width:300px;
+	height: 300px;
+	display: inline-block;
+	margin-left:22px;
+	margin-top:22px;
+}
+#container .box .icon{
+	width:200px;
+	height:160px;
+	display: block;
+	margin:20px auto;
+	transition: transform 0.2s ease;
+	-webkit-transition: transform 0.2s ease;
+	-o-transition: transform 0.2s ease;
+	-moz-transition: transform 0.2s ease;
+}
+#container .box-mission .icon{
+	background:url("img/mission.png") 0px -24px  no-repeat;
+	background-size:200px auto;
+}
+#container .box-play .icon{
+	background:url("img/play.png") 0px -24px  no-repeat;
+	background-size:200px auto;
+}
+#container .box-touch .icon{
+	background:url("img/touch.png") 0px -24px  no-repeat;
+	background-size:200px auto;
+}
+#container .box .icon:hover{
+	transform:scale(1.2) rotate(360deg);
+	-webkit-transform:scale(1.2) rotate(360deg);
+	-o-transform:scale(1.2) rotate(360deg);
+	-moz-transform:scale(1.2) rotate(360deg);
+}
+#container .box a{
+	width:220px;
+	height:55px;
+	line-height: 55px;
+	border:2px solid rgba(255,255,255,0.6);
+	display:block;
+	margin: 40px auto;
+	text-decoration: none;
+	color:#2ecc71;
+	font-family: "微软雅黑";
+	font-size: 20px;
+	padding-left:40px;
+	background:url("img/jiantou.png") no-repeat 190px center;
+	transition: 0.2s ease;
+	position:relative;
+}
+#container .box a .top{
+	width:0px;
+	height:2px;
+	position:absolute;
+	top:-2px;
+	left:-60%;
+	background-color: white;
+	transition: 0.2s ease;
+	-webkit-transition: 0.2s ease;
+	-o-transition: 0.2s ease;
+	-moz-transition: 0.2s ease;
+}
+#container .box a .bottom{
+	width:0px;
+	height:2px;
+	position:absolute;
+	bottom:-2px;
+	right:-60%;
+	background-color: white;
+	transition: 0.2s ease;
+	-webkit-transition: 0.2s ease;
+	-o-transition: 0.2s ease;
+	-moz-transition: 0.2s ease;
+}
+#container .box a .left{
+	width:2px;
+	height:0px;
+	position:absolute;
+	left:-2px;
+	bottom:-160%;
+	background-color: white;
+	transition: 0.2s ease;
+	-webkit-transition: 0.2s ease;
+	-o-transition: 0.2s ease;
+	-moz-transition: 0.2s ease;
+}
+#container .box a .right{
+	width:2px;
+	height:0px;
+	position:absolute;
+	right:-2px;
+	top:-160%;
+	background-color: white;
+	transition: 0.2s ease;
+	-webkit-transition: 0.2s ease;
+	-o-transition: 0.2s ease;
+	-moz-transition: 0.2s ease;
+}
+#container .box a:hover{
+	background:url("img/jiantou.png") no-repeat 200px center;
+}
+#container .box a:hover .top{
+	left:-2px;
+	width:262px;
+}
+#container .box a:hover .bottom{
+	right:-2px;
+	width:262px;
+}
+#container .box a:hover .left{
+	bottom:-2px;
+	height:57px;
+}
+#container .box a:hover .right{
+	top:-2px;
+	height:57px;
+}

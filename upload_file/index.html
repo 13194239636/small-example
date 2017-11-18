@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<script type="text/javascript" src="../jquery-3.2.1.min.js"></script>
+	<title>文件上传</title>
+</head>
+<style type="text/css">
+	#div1{width:300px;height:30px;border:1px solid black; margin-top:20px;}
+	#div2{width:0px;height:30px;text-align:right;background-color: blue;line-height: 30px;
+		color:white;}
+</style>
+<body>
+	<input type="file" name="file" id="file">
+	<input type="button" name="button" id="button" value="上传">
+	<div id="div1">
+		<div id="div2">0%</div>
+	</div>
+	<script type="text/javascript">
+		window.onload = function(){
+			$("#button").click(function(){
+				var xhr = new XMLHttpRequest();
+				
+				var upload = xhr.upload;
+				upload.onprogress = function(e){
+					if(e.total > 8388608){
+						xhr.abort();
+						alert("Warnning:文件不能大于8388608bytes!");
+					}
+					var scale = e.loaded/e.total;
+					$("#div2")[0].style.width = scale*300+"px";
+					$("#div2")[0].innerHTML = parseInt(scale*100)+"%";
+				}
+
+				xhr.onload = function(){
+				}
+				var formData = new FormData();
+				formData.append("file",$("#file")[0].files[0]);
+				xhr.open("POST","post_file.php",true);
+				xhr.setRequestHeader("X-Request-With","XMLHttpRequest");
+				xhr.send(formData);
+			})
+		}
+	</script>
+</body>
+</html>

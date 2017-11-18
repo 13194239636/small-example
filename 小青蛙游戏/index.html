@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>小游戏</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        body{
+            background: black;
+        }
+        #wrap{
+            width:600px;
+            height:600px;
+            margin:0 auto;
+        }
+        #c1{
+            background: white;
+        }
+    </style>
+    <script>
+        window.onload = function(){
+            var oC = document.getElementById("c1");
+            var oGc = oC.getContext("2d");
+            var oCw = oC.width;
+            var oCh = oC.height;
+            var mouseAngle = 0;
+
+            var ball =[];
+            var bullet = [];
+
+            oGc.beginPath();
+            oGc.arc(300,200,200,-90*Math.PI/180,180*Math.PI/180,false);
+            oGc.arc(240,200,140,180*Math.PI/180,360*Math.PI/180,false);
+            oGc.stroke();
+
+            oGc.beginPath();
+            oGc.arc(380,200,20,0,360*Math.PI/180,false);
+            oGc.stroke();
+
+            var yImg = new Image();
+
+            yImg.src = 'person.png';
+            yImg.onload = function(){
+                setInterval(function(){
+
+                    oGc.clearRect(0,0,oCw,oCh);
+
+                    oGc.beginPath();
+                    oGc.arc(300,200,200,-90*Math.PI/180,180*Math.PI/180,false);
+                    oGc.arc(240,200,140,180*Math.PI/180,360*Math.PI/180,false);
+                    oGc.stroke();
+
+                    oGc.beginPath();
+                    oGc.arc(380,200,20,0,360*Math.PI/180,false);
+                    oGc.stroke();
+
+
+                    for(var i=0;i<ball.length;i++){
+                        ball[i].nowAngle++;
+                        if(ball[i].nowAngle==270){
+                            ball[i].r=140;
+                            ball[i].x=240;
+                            ball[i].y=60;
+                        }
+                        if(ball[i].nowAngle==450){
+                            window.location.reload();
+                            alert("游戏结束");
+                        }
+
+
+                        oGc.beginPath();
+                        oGc.arc(ball[i].x+ball[i].r*Math.sin(ball[i].nowAngle*Math.PI/180),ball[i].y+ball[i].r-ball[i].r*Math.cos(ball[i].nowAngle*Math.PI/180),20,0,360*Math.PI/180,false);
+                        oGc.fill();
+                    }
+                    for(var i=0;i<bullet.length;i++){
+                        bullet[i].x=bullet[i].x+bullet[i].sX;
+                        bullet[i].y=bullet[i].y+bullet[i].sY;
+
+                        oGc.save();
+                        oGc.beginPath();
+                        oGc.fillStyle='red';
+                        oGc.arc(bullet[i].x,bullet[i].y,20,0,360*Math.PI/180,false);
+                        oGc.closePath();
+                        oGc.fill();
+                        oGc.restore();
+
+
+                    }
+                    for(var i=0;i<ball.length;i++) {
+                        for (var j=0;j<bullet.length;j++) {
+                            if(collision(bullet[j].x,bullet[j].y,ball[i].x+ball[i].r*Math.sin(ball[i].nowAngle*Math.PI/180),ball[i].y+ball[i].r-ball[i].r*Math.cos(ball[i].nowAngle*Math.PI/180))){
+                                bullet.splice(j,1);
+                                ball.splice(i,1);
+                                break;
+                            }
+                        }
+                    }
+
+
+                    oGc.save();
+                    oGc.translate(300,200);
+                    oGc.rotate(mouseAngle);
+                    oGc.translate(-40,-40);
+                    oGc.drawImage(yImg,0,0);
+                    oGc.restore();
+
+                },1000/60);
+            }
+
+
+            setInterval(function(){
+                ball.push({
+                        'x':300,
+                        'y':0,
+                        'r':200,
+                        'startX':300,
+                        'startY':0,
+                        'startR':200,
+                        'nowAngle':0,
+                });
+            },350);
+
+            oC.onmousemove = function(ev){
+                var ev = ev||window.event;
+                var x = ev.clientX-oC.offsetLeft;
+                var y = ev.clientY-oC.offsetTop;
+
+                var a = x-260;
+                var b = 160-y;
+
+                var c =Math.sqrt(a*a+b*b);
+
+                if(a>0&&b>0){
+                    mouseAngle = Math.asin(a/c);
+                }
+                else if(a>0&&b<0){
+                    mouseAngle = Math.asin(Math.abs(b)/c)+90*Math.PI/180;
+                }
+                else if(a<0&&b>0){
+                    mouseAngle = -Math.asin(Math.abs(a)/c);
+                }
+                else{
+                    mouseAngle = -Math.asin(Math.abs(b)/c)-90*Math.PI/180;
+                }
+            }
+            oC.onmousedown = function(ev){
+                var ev = ev||window.event;
+                var x = ev.clientX-oC.offsetLeft;
+                var y = ev.clientY-oC.offsetTop;
+
+                var a = x-260;
+                var b = y-160;
+
+                var c =Math.sqrt(a*a+b*b);
+
+                var speed = 5;
+                var sX = speed*a/c;
+                var sY = speed*b/c;
+
+                bullet.push({
+                    'x':300,
+                    'y':200,
+                    'sX':sX,
+                    'sY':sY,
+                });
+            }
+            function collision(x1,y1,x2,y2){
+                var distance = Math.sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
+                if(distance<40){
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+
+        }
+    </script>
+</head>
+<body>
+<div id="wrap">
+    <canvas id="c1" width="600" height="600"></canvas>
+</div>
+</body>
+</html>
